@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LS Academy</title>
+  
+  <!-- Mobile App Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="logo.png">
+  <meta name="theme-color" content="#4F46E5">
+  
+  <!-- Tailwind CSS & Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased text-gray-800 pb-10">
+
+  <!-- TOP NAVBAR -->
+  <nav class="bg-indigo-600 text-white p-4 shadow-md sticky top-0 z-50 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <i class="fa-solid fa-graduation-cap text-2xl"></i>
+      <h1 class="text-xl font-bold tracking-wide">LS Academy</h1>
+    </div>
+    
+    <!-- Admin Switch Button -->
+    <button id="nav-admin-btn" onclick="toggleAdminView()" class="bg-indigo-700 hover:bg-indigo-800 text-xs sm:text-sm px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+      <i class="fa-solid fa-user-lock"></i>
+      <span>Admin Login</span>
+    </button>
+  </nav>
+
+  <main class="max-w-2xl mx-auto p-4">
+
+    <!-- =================================================== -->
+    <!-- 1. STUDENT VIEW -->
+    <!-- =================================================== -->
+    <section id="user-view" class="space-y-6">
+      
+      <!-- Welcome Card -->
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800">Welcome Students! 👋</h2>
+          <p class="text-xs text-gray-500 mt-1">Check today's notice board and timetable below.</p>
+        </div>
+        <button id="enable-notif-btn" class="text-xs bg-indigo-50 text-indigo-600 px-3 py-2 rounded-xl font-medium border border-indigo-100 flex items-center gap-1 hover:bg-indigo-100">
+          <i class="fa-regular fa-bell"></i>
+          <span>Notification</span>
+        </button>
+      </div>
+
+      <!-- Notice Board -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-4 border-b pb-2">
+          <h3 class="font-bold text-gray-800 flex items-center gap-2">
+            <i class="fa-solid fa-bullhorn text-amber-500"></i>
+            <span>Notice Board</span>
+          </h3>
+        </div>
+        
+        <div id="notices-container" class="space-y-3">
+          <p class="text-xs text-gray-400 text-center py-4">Loading notices...</p>
+        </div>
+      </div>
+
+      <!-- Time Table -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-4 border-b pb-2">
+          <h3 class="font-bold text-gray-800 flex items-center gap-2">
+            <i class="fa-regular fa-calendar-check text-indigo-500"></i>
+            <span>Time Table</span>
+          </h3>
+        </div>
+
+        <div id="timetable-container" class="space-y-3">
+          <p class="text-xs text-gray-400 text-center py-4">Loading timetable...</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =================================================== -->
+    <!-- 2. ADMIN VIEW -->
+    <!-- =================================================== -->
+    <section id="admin-view" class="hidden space-y-6">
+      
+      <!-- Back to Home Bar -->
+      <div class="flex justify-between items-center bg-amber-50 border border-amber-200 p-3 rounded-xl">
+        <span class="text-xs font-semibold text-amber-800 flex items-center gap-1">
+          <i class="fa-solid fa-shield-halved"></i> Admin Mode
+        </span>
+        <button onclick="toggleAdminView()" class="text-xs bg-white text-gray-700 px-3 py-1.5 rounded-lg border shadow-sm hover:bg-gray-50 flex items-center gap-1">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </button>
+      </div>
+
+      <!-- Add Notice Form -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <h3 class="font-bold text-gray-800 mb-4 text-sm flex items-center gap-2">
+          <i class="fa-solid fa-plus text-indigo-600"></i> Publish New Notice
+        </h3>
+        <form id="notice-form" class="space-y-3">
+          <div>
+            <label class="text-xs text-gray-500 font-medium">Notice Title</label>
+            <input type="text" id="notice-title" required placeholder="e.g., Exam Postponed" class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+          <div>
+            <label class="text-xs text-gray-500 font-medium">Notice Details</label>
+            <textarea id="notice-desc" rows="3" placeholder="Enter details here..." class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+          </div>
+          <button type="submit" id="notice-submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-medium text-sm flex justify-center items-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Publish Notice</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Add Timetable Form -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <h3 class="font-bold text-gray-800 mb-4 text-sm flex items-center gap-2">
+          <i class="fa-solid fa-clock text-indigo-600"></i> Update Timetable
+        </h3>
+        <form id="timetable-form" class="space-y-3">
+          <div>
+            <label class="text-xs text-gray-500 font-medium">Select Class</label>
+            <select id="tt-class" class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+              <option value="Class 5">Class 5</option>
+              <option value="Class 6">Class 6</option>
+              <option value="Class 7">Class 7</option>
+              <option value="Class 8">Class 8</option>
+              <option value="Class 9">Class 9</option>
+              <option value="Class 10">Class 10</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-500 font-medium">Subject & Time Details</label>
+            <input type="text" id="tt-details" required placeholder="e.g., Maths - 5:00 PM to 6:30 PM" class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+          </div>
+          <button type="submit" id="tt-submit-btn" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl font-medium text-sm flex justify-center items-center gap-2">
+            <i class="fa-solid fa-calendar-plus"></i>
+            <span>Update Timetable</span>
+          </button>
+        </form>
+      </div>
+
+    </section>
+
+  </main>
+
+<!-- Firebase App (Compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<!-- Firebase Firestore (Compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC_hjdAHD11DPLXGC-wC1sltAAlunrG1XE",
+    authDomain: "ls-tuition.firebaseapp.com",
+    projectId: "ls-tuition",
+    storageBucket: "ls-tuition.firebasestorage.app",
+    messagingSenderId: "436382812973",
+    appId: "1:436382812973:web:1539769f23e03f22cca1a4",
+    measurementId: "G-NVXR2KJ5F8"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  
+  // ഗ്ലോബൽ ആയി സെറ്റ് ചെയ്യുന്നു
+  window.db = db;
+</script>
+
+  <!-- JS FILES -->
+  <script src="app.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
