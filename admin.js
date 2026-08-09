@@ -2,7 +2,7 @@
 // ADMIN PANEL MANAGEMENT & DATA SUBMISSION
 // ==============================================================================
 const db = window.db; 
-const ADMIN_PASSWORD = "admin";
+const ADMIN_PASSWORD = "leenasugi";
 let isAdminLoggedIn = false;
 
 // Toggle Admin Panel View
