@@ -175,7 +175,7 @@ db.collection("notices")
 
     let validNoticeCount = 0;
     const now = new Date().getTime(); // ഇപ്പോഴത്തെ സമയം
-    const twentyFourHours = 24 * 60 * 60 * 1000; // 24 മണിക്കൂറിന്റെ മില്ലിസെക്കൻഡ്
+    const twentyFourHours = 14 * 60 * 60 * 1000; // 24 മണിക്കൂറിന്റെ മില്ലിസെക്കൻഡ്
 
     snapshot.forEach((doc) => {
       const data = doc.data();
@@ -248,7 +248,7 @@ db.collection("timetable")
 
     let validTTCount = 0;
     const now = new Date().getTime();
-    const twentyFourHours = 24 * 60 * 60 * 1000;
+    const twentyFourHours = 14 * 60 * 60 * 1000;
 
     snapshot.forEach((doc) => {
       const data = doc.data();
