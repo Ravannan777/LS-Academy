@@ -8,7 +8,7 @@
 // 2. ADMIN PANEL ACCESS & SECURITY (SINGLE PAGE SWITCH)
 // ==============================================================================
 
-const ADMIN_PASSWORD = "admin"; 
+const ADMIN_PASSWORD = "leenasugi"; 
 let isAdminLoggedIn = false;
 
 /**
