@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class Result</title>
+    <title>Class 8 Result</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body style="background-color: #f0f2f5; margin: 0;">
@@ -15,7 +15,7 @@
 
     <!-- പ്രധാന കണ്ടെയ്നർ -->
     <div class="page-container">
-        <h2> 8 -Check Exam Result</h2>
+        <h2> 8 - Check Exam Result</h2>
         
         <div class="form-group">
             <label for="rollNumber">Roll Number:</label>
@@ -30,49 +30,75 @@
         <button onclick="checkStudentResult()" class="submit-btn">Check Result</button>
         
         <!-- റിസൾട്ട് കാണിക്കുന്ന ബോക്സ് -->
-        <div id="resultBox">
+        <div id="resultBox" style="display: none; margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             <!-- ഡാറ്റ ഇവിടെ ലോഡ് ചെയ്യപ്പെടും -->
         </div>
     </div>
 
-    <script>
-        function checkStudentResult() {
+    <!-- ഫയർബേസ് v9 കോഡ് -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC_hjdAHD11DPLXGC-wC1sltAAlunrG1XE",
+            authDomain: "ls-tuition.firebaseapp.com",
+            projectId: "ls-tuition",
+            storageBucket: "ls-tuition.firebasestorage.app",
+            messagingSenderId: "436382812973",
+            appId: "1:436382812973:web:1539769f23e03f22cca1a4",
+            measurementId: "G-NVXR2KJ5F8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.checkStudentResult = async function() {
             const rollNo = document.getElementById('rollNumber').value.trim();
             const sName = document.getElementById('studentName').value.trim();
             const resultBox = document.getElementById('resultBox');
 
             if (rollNo === "" || sName === "") {
-                alert("Please enter both Roll Number and Student Name!");
+                alert("ദയവായി റോൾ നമ്പറും കുട്ടിയുടെ പേരും നൽകുക!");
                 return;
             }
 
-            // Check Firebase Firestore for the student's result (Example for Class 8)
-            db.collection("class8_results")
-                .where("rollNumber", "==", rollNo)
-                .where("name", "==", sName)
-                .get()
-                .then((querySnapshot) => {
-                    if (querySnapshot.empty) {
+            try {
+                // എട്ടാം ക്ലാസിനുള്ള കളക്ഷൻ നെയിം (വ്യത്യാസമുണ്ടെങ്കിൽ ഇവിടെ മാറ്റാം)
+                const q = query(
+                    collection(db, "class8_results"), 
+                    where("rollNumber", "==", rollNo),
+                    where("name", "==", sName)
+                );
+                
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    resultBox.style.display = "block";
+                    resultBox.innerHTML = "<p style='color: red;'>ഇത്തരം വിവരങ്ങൾ ഒന്നും കണ്ടെത്താനായില്ല. റോൾ നമ്പറും പേരും കൃത്യമാണെന്ന് ഉറപ്പുവരുത്തുക.</p>";
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
                         resultBox.style.display = "block";
-                        resultBox.innerHTML = "<p style='color: red;'>No matching records found. Please verify the Roll Number and Name.</p>";
-                    } else {
-                        querySnapshot.forEach((doc) => {
-                            const data = doc.data();
-                            resultBox.style.display = "block";
-                            resultBox.innerHTML = `
-                                <h4 style="color: #1a73e8; margin-bottom: 10px;">Result Details:</h4>
-                                <p><strong>Name:</strong> ${data.name}</p>
-                                <p><strong>Roll Number:</strong> ${data.rollNumber}</p>
-                                <p><strong>Marks:</strong> ${data.marks}</p>
-                            `;
-                        });
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error getting document: ", error);
-                    alert("An error occurred. Please try again.");
-                });
-        }
+                        resultBox.innerHTML = `
+                            <h4 style="color: #1a73e8; margin-bottom: 10px;">റിസൾട്ട് വിവരങ്ങൾ:</h4>
+                            <p><strong>പേര്:</strong> ${data.name}</p>
+                            <p><strong>റോൾ നമ്പർ:</strong> ${data.rollNumber}</p>
+                            <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
+                            <p><strong>മലയാളം:</strong> ${data.malayalam || 'N/A'}</p>
+                            <p><strong>ഇംഗ്ലീഷ്:</strong> ${data.english || 'N/A'}</p>
+                            <p><strong>ഹിന്ദി:</strong> ${data.hindi || 'N/A'}</p>
+                            <p><strong>ഗണിതം (Maths):</strong> ${data.maths || 'N/A'}</p>
+                            <p><strong>ഫിസിക്സ്:</strong> ${data.physics || 'N/A'}</p>
+                            <p><strong>കെമിസ്ട്രി:</strong> ${data.chemistry || 'N/A'}</p>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error("Error getting document: ", error);
+                alert("എന്തെങ്കിലും പ്രശ്നം സംഭവിച്ചു. വീണ്ടും ശ്രമിക്കുക.");
+            }
+        };
     </script>
 </body>
 </html>
