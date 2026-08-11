@@ -40,7 +40,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-        // നിങ്ങൾ തന്ന ഫയർബേസ് കോൺഫിഗറേഷൻ
         const firebaseConfig = {
             apiKey: "AIzaSyC_hjdAHD11DPLXGC-wC1sltAAlunrG1XE",
             authDomain: "ls-tuition.firebaseapp.com",
@@ -54,7 +53,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ബട്ടൺ ക്ലിക്ക് ചെയ്യുമ്പോൾ വർക്ക് ചെയ്യാനുള്ള ഫങ്ഷൻ
         window.checkStudentResult = async function() {
             const rollNo = document.getElementById('rollNumber').value.trim();
             const sName = document.getElementById('studentName').value.trim();
@@ -85,7 +83,13 @@
                             <h4 style="color: #1a73e8; margin-bottom: 10px;">റിസൾട്ട് വിവരങ്ങൾ:</h4>
                             <p><strong>പേര്:</strong> ${data.name}</p>
                             <p><strong>റോൾ നമ്പർ:</strong> ${data.rollNumber}</p>
-                            <p><strong>മാർക്കുകൾ:</strong> ${data.marks}</p>
+                            <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
+                            <p><strong>മലയാളം:</strong> ${data.malayalam || 'N/A'}</p>
+                            <p><strong>ഇംഗ്ലീഷ്:</strong> ${data.english || 'N/A'}</p>
+                            <p><strong>ഹിന്ദി:</strong> ${data.hindi || 'N/A'}</p>
+                            <p><strong>ഗണിതം (Maths):</strong> ${data.maths || 'N/A'}</p>
+                            <p><strong>ഫിസിക്സ്:</strong> ${data.physics || 'N/A'}</p>
+                            <p><strong>കെമിസ്ട്രി:</strong> ${data.chemistry || 'N/A'}</p>
                         `;
                     });
                 }
