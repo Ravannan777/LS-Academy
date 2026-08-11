@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Result</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #f0f2f5; margin: 0;">
+
+    <!-- ഹോം പേജിലേക്ക് പോകാനുള്ള ബട്ടൺ -->
+    <div class="back-btn-container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+
+    <!-- പ്രധാന കണ്ടെയ്നർ -->
+    <div class="page-container">
+        <h2> 9 -Check Exam Result</h2>
+        
+        <div class="form-group">
+            <label for="rollNumber">Roll Number:</label>
+            <input type="text" id="rollNumber" placeholder="Enter Roll Number (e.g., 101)">
+        </div>
+
+        <div class="form-group">
+            <label for="studentName">Student Name:</label>
+            <input type="text" id="studentName" placeholder="Enter Student Name">
+        </div>
+
+        <button onclick="checkStudentResult()" class="submit-btn">Check Result</button>
+        
+        <!-- റിസൾട്ട് കാണിക്കുന്ന ബോക്സ് -->
+        <div id="resultBox">
+            <!-- ഡാറ്റ ഇവിടെ ലോഡ് ചെയ്യപ്പെടും -->
+        </div>
+    </div>
+
+    <script>
+        function checkStudentResult() {
+            const rollNo = document.getElementById('rollNumber').value.trim();
+            const sName = document.getElementById('studentName').value.trim();
+            const resultBox = document.getElementById('resultBox');
+
+            if (rollNo === "" || sName === "") {
+                alert("Please enter both Roll Number and Student Name!");
+                return;
+            }
+
+            // Check Firebase Firestore for the student's result (Example for Class 9)
+            db.collection("class9_results")
+                .where("rollNumber", "==", rollNo)
+                .where("name", "==", sName)
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        resultBox.style.display = "block";
+                        resultBox.innerHTML = "<p style='color: red;'>No matching records found. Please verify the Roll Number and Name.</p>";
+                    } else {
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            resultBox.style.display = "block";
+                            resultBox.innerHTML = `
+                                <h4 style="color: #1a73e8; margin-bottom: 10px;">Result Details:</h4>
+                                <p><strong>Name:</strong> ${data.name}</p>
+                                <p><strong>Roll Number:</strong> ${data.rollNumber}</p>
+                                <p><strong>Marks:</strong> ${data.marks}</p>
+                            `;
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error getting document: ", error);
+                    alert("An error occurred. Please try again.");
+                });
+        }
+    </script>
+</body>
+</html>

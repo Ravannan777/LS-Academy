@@ -61,3 +61,123 @@ html {
   50% { transform: rotate(0); }
   100% { transform: rotate(0); }
 }
+.class-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.class-buttons .btn {
+    background-color: #4CAF50; /* ബട്ടന്റെ നിറം (നിങ്ങൾക്ക് ഇഷ്ടമുള്ളത് മാറ്റാം) */
+    color: white;             /* അക്ഷരങ്ങളുടെ നിറം */
+    padding: 10px 20px;       /* ബട്ടന്റെ വലിപ്പം */
+    text-decoration: none;    /* അടിയിലെ വര ഒഴിവാക്കാൻ */
+    border-radius: 8px;       /* അരികുകൾ വളയക്കാൻ */
+    font-size: 16px;          /* അക്ഷരവലിപ്പം */
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.class-buttons .btn:hover {
+    background-color: #45a049; /* മൗസ് വെക്കുമ്പോൾ കളർ മാറാൻ */
+}
+.class-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    justify-content: center; /* ഇത് കൊടുത്താൽ ബട്ടണുകൾ നടുവിലേക്ക് വരും */
+}
+/* ക്ലാസ് പേജുകൾക്കായുള്ള പ്രീമിയം സ്റ്റൈലുകൾ */
+.page-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.page-container h2 {
+    color: #1a73e8;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+.submit-btn:hover {
+    opacity: 0.95;
+    transform: translateY(-2px);
+}
+
+.back-btn-container {
+    padding: 20px;
+}
+
+.back-btn {
+    background-color: #5f6368;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.back-btn:hover {
+    background-color: #3c4043;
+}
+
+#resultBox {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-left: 5px solid #1a73e8;
+    border-radius: 8px;
+    display: none;
+}
