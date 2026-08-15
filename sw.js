@@ -2,14 +2,21 @@
 // SERVICE WORKER FOR PWA & BACKGROUND NOTIFICATIONS
 // ==============================================================================
 
-const CACHE_NAME = "tuition-app-v1";
+const CACHE_NAME = "tuition-app-v3";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
+  "./class7.html",
+  "./class8.html",
+  "./class9.html",
+  "./class10.html",
   "./style.css",
   "./app.js",
   "./admin.js",
-  "./manifest.json"
+  "./firebase-init.js",
+  "./firebase-config.mjs",
+  "./manifest.json",
+  "./logo.png"
 ];
 
 // 1. Install Event: Cache critical static assets

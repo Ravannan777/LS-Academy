@@ -1,79 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LS Academy</title>
-  
+
   <!-- Mobile App Meta Tags -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="logo.png">
-  <meta name="theme-color" content="#4F46E5">
-  
-  <!-- Tailwind CSS & Icons -->
+  <meta name="theme-color" content="#10151F">
+
+  <!-- Tailwind CSS (layout utilities only — colors/type come from style.css) & Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100 font-sans antialiased text-gray-800 pb-10">
+<body class="pb-10">
 
-  <!-- TOP NAVBAR -->
-  <nav class="bg-indigo-600 text-white p-4 shadow-md sticky top-0 z-50 flex justify-between items-center">
-    <div class="flex items-center space-x-2">
-      <i class="fa-solid fa-graduation-cap text-2xl"></i>
-      <h1 class="text-xl font-bold tracking-wide">LS Academy</h1>
+  <!-- TOP HEADER (letterhead) -->
+  <nav class="ls-header">
+    <div class="ls-brand">
+      <img src="logo.png" alt="LS Academy crest">
+      <div>
+        <h1>LS Academy</h1>
+        <div class="tagline">Inspiring Success, Shaping Futures</div>
+      </div>
     </div>
-    
+
     <!-- Admin Switch Button -->
-    <button id="nav-admin-btn" onclick="toggleAdminView()" class="bg-indigo-700 hover:bg-indigo-800 text-xs sm:text-sm px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+    <button id="nav-admin-btn" onclick="toggleAdminView()" class="nav-btn">
       <i class="fa-solid fa-user-lock"></i>
-      <span>Admin Login</span>
+      <span>അഡ്മിൻ ലോഗിൻ</span>
     </button>
   </nav>
 
-  <main class="max-w-2xl mx-auto p-4">
+  <main class="ls-main">
 
     <!-- =================================================== -->
     <!-- 1. STUDENT VIEW -->
     <!-- =================================================== -->
-    <section id="user-view" class="space-y-6">
-      
+    <section id="user-view">
+
       <!-- Welcome Card -->
-      <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+      <div class="welcome-card">
         <div>
-          <h2 class="text-lg font-semibold text-gray-800">Welcome Students! 👋</h2>
-          <p class="text-xs text-gray-500 mt-1">Check today's notice board and timetable below.</p>
+          <h2>Welcome, Students 👋</h2>
+          <p>ഇന്നത്തെ അറിയിപ്പുകളും ടൈംടേബിളും താഴെ കാണാം.</p>
         </div>
-        <button id="enable-notif-btn" class="text-xs bg-indigo-50 text-indigo-600 px-3 py-2 rounded-xl font-medium border border-indigo-100 flex items-center gap-1 hover:bg-indigo-100">
+        <button id="enable-notif-btn" class="notif-btn">
           <i class="fa-regular fa-bell"></i>
-          <span>Notification</span>
+          <span>Notify</span>
         </button>
       </div>
 
+      <!-- Quick class result links -->
+      <div class="laurel-divider">
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none"><path d="M2 13C4.5 9 3.5 4.5 1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M2 10.5L4.5 9M2 7.5L5 6.3M2 4.5L4.7 3.6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+        <span style="font-family:var(--font-display); font-size:0.85rem; font-weight:600; color:var(--navy-950);">Check Your Result</span>
+        <span class="laurel-line"></span>
+      </div>
+      <div class="class-buttons">
+        <a href="class7.html" class="btn">Class 7</a>
+        <a href="class8.html" class="btn">Class 8</a>
+        <a href="class9.html" class="btn">Class 9</a>
+        <a href="class10.html" class="btn">Class 10</a>
+      </div>
+
       <!-- Notice Board -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center justify-between mb-4 border-b pb-2">
-          <h3 class="font-bold text-gray-800 flex items-center gap-2">
-            <i class="fa-solid fa-bullhorn text-amber-500"></i>
-            <span>Notice Board</span>
-          </h3>
+      <div class="section-card">
+        <h3><i class="fa-solid fa-bullhorn"></i> Notice Board</h3>
+        <div class="laurel-divider">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none"><path d="M2 13C4.5 9 3.5 4.5 1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M2 10.5L4.5 9M2 7.5L5 6.3M2 4.5L4.7 3.6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+          <span class="laurel-line"></span>
         </div>
-        
         <div id="notices-container" class="space-y-3">
           <p class="text-xs text-gray-400 text-center py-4">Loading notices...</p>
         </div>
       </div>
 
       <!-- Time Table -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center justify-between mb-4 border-b pb-2">
-          <h3 class="font-bold text-gray-800 flex items-center gap-2">
-            <i class="fa-regular fa-calendar-check text-indigo-500"></i>
-            <span>Time Table</span>
-          </h3>
+      <div class="section-card">
+        <h3><i class="fa-regular fa-calendar-check"></i> Time Table</h3>
+        <div class="laurel-divider">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none"><path d="M2 13C4.5 9 3.5 4.5 1 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M2 10.5L4.5 9M2 7.5L5 6.3M2 4.5L4.7 3.6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+          <span class="laurel-line"></span>
         </div>
-
         <div id="timetable-container" class="space-y-3">
           <p class="text-xs text-gray-400 text-center py-4">Loading timetable...</p>
         </div>
@@ -84,49 +96,43 @@
     <!-- =================================================== -->
     <!-- 2. ADMIN VIEW -->
     <!-- =================================================== -->
-    <section id="admin-view" class="hidden space-y-6">
-      
+    <section id="admin-view" class="hidden space-y-5">
+
       <!-- Back to Home Bar -->
-      <div class="flex justify-between items-center bg-amber-50 border border-amber-200 p-3 rounded-xl">
-        <span class="text-xs font-semibold text-amber-800 flex items-center gap-1">
-          <i class="fa-solid fa-shield-halved"></i> Admin Mode
-        </span>
-        <button onclick="toggleAdminView()" class="text-xs bg-white text-gray-700 px-3 py-1.5 rounded-lg border shadow-sm hover:bg-gray-50 flex items-center gap-1">
+      <div class="admin-strip">
+        <span><i class="fa-solid fa-shield-halved"></i> Admin Mode</span>
+        <button onclick="toggleAdminView()" class="admin-back-btn">
           <i class="fa-solid fa-arrow-left"></i>
           <span>Back to Home</span>
         </button>
       </div>
 
       <!-- Add Notice Form -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <h3 class="font-bold text-gray-800 mb-4 text-sm flex items-center gap-2">
-          <i class="fa-solid fa-plus text-indigo-600"></i> Publish New Notice
-        </h3>
-        <form id="notice-form" class="space-y-3">
-          <div>
-            <label class="text-xs text-gray-500 font-medium">Notice Title</label>
-            <input type="text" id="notice-title" required placeholder="e.g., Exam Postponed" class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+      <div class="section-card">
+        <h3><i class="fa-solid fa-plus"></i> Publish New Notice</h3>
+        <form id="notice-form">
+          <div class="field-group">
+            <label class="field-label">Notice Title</label>
+            <input type="text" id="notice-title" required placeholder="e.g., Exam Postponed" class="field-input">
           </div>
-          <div>
-            <label class="text-xs text-gray-500 font-medium">Notice Details</label>
-            <textarea id="notice-desc" rows="3" placeholder="Enter details here..." class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+          <div class="field-group">
+            <label class="field-label">Notice Details</label>
+            <textarea id="notice-desc" rows="3" placeholder="Enter details here..." class="field-textarea"></textarea>
           </div>
-          <button type="submit" id="notice-submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-medium text-sm flex justify-center items-center gap-2">
+          <button type="submit" id="notice-submit-btn" class="btn-gold">
             <i class="fa-solid fa-paper-plane"></i>
-            <span>Publish Notice</span>
+            <span>അറിയിപ്പ് പോസ്റ്റ് ചെയ്യുക</span>
           </button>
         </form>
       </div>
 
       <!-- Add Timetable Form -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <h3 class="font-bold text-gray-800 mb-4 text-sm flex items-center gap-2">
-          <i class="fa-solid fa-clock text-indigo-600"></i> Update Timetable
-        </h3>
-        <form id="timetable-form" class="space-y-3">
-          <div>
-            <label class="text-xs text-gray-500 font-medium">Select Class</label>
-            <select id="tt-class" class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+      <div class="section-card">
+        <h3><i class="fa-solid fa-clock"></i> Update Timetable</h3>
+        <form id="timetable-form">
+          <div class="field-group">
+            <label class="field-label">Select Class</label>
+            <select id="tt-class" class="field-select">
               <option value="Class 5">Class 5</option>
               <option value="Class 6">Class 6</option>
               <option value="Class 7">Class 7</option>
@@ -135,13 +141,13 @@
               <option value="Class 10">Class 10</option>
             </select>
           </div>
-          <div>
-            <label class="text-xs text-gray-500 font-medium">Subject & Time Details</label>
-            <input type="text" id="tt-details" required placeholder="e.g., Maths - 5:00 PM to 6:30 PM" class="w-full text-sm p-2.5 mt-1 border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+          <div class="field-group">
+            <label class="field-label">Subject & Time Details</label>
+            <input type="text" id="tt-details" required placeholder="e.g., Maths - 5:00 PM to 6:30 PM" class="field-input">
           </div>
-          <button type="submit" id="tt-submit-btn" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl font-medium text-sm flex justify-center items-center gap-2">
+          <button type="submit" id="tt-submit-btn" class="btn-navy">
             <i class="fa-solid fa-calendar-plus"></i>
-            <span>Update Timetable</span>
+            <span>ടൈംടേബിൾ അപ്‌ഡേറ്റ് ചെയ്യുക</span>
           </button>
         </form>
       </div>
@@ -150,41 +156,16 @@
 
   </main>
 
-<!-- Firebase App (Compat) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<!-- Firebase Firestore (Compat) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <!-- Firebase App (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-<script>
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyC_hjdAHD11DPLXGC-wC1sltAAlunrG1XE",
-    authDomain: "ls-tuition.firebaseapp.com",
-    projectId: "ls-tuition",
-    storageBucket: "ls-tuition.firebasestorage.app",
-    messagingSenderId: "436382812973",
-    appId: "1:436382812973:web:1539769f23e03f22cca1a4",
-    measurementId: "G-NVXR2KJ5F8"
-  };
-
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  
-  // ഗ്ലോബൽ ആയി സെറ്റ് ചെയ്യുന്നു
-  window.db = db;
-</script>
+  <!-- Shared Firebase config -->
+  <script src="firebase-init.js"></script>
 
   <!-- JS FILES -->
   <script src="app.js"></script>
   <script src="admin.js"></script>
-
-  <div class="class-buttons">
-    <a href="class7.html" class="btn">Class 7</a>
-    <a href="class8.html" class="btn">Class 8</a>
-    <a href="class9.html" class="btn">Class 9</a>
-    <a href="class10.html" class="btn">Class 10</a>
-</div>
 
 </body>
 </html>

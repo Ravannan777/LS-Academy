@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 7 Result</title>
+    <title>Class 7 Result | LS Academy</title>
+    <meta name="theme-color" content="#10151F">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: #f0f2f5; margin: 0;">
+<body class="result-page-body">
 
-    <!-- ഹോം പേജിലേക്ക് പോകാനുള്ള ബട്ടൺ -->
     <div class="back-btn-container">
-        <a href="index.html" class="back-btn">← Back to Home</a>
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
     </div>
 
-    <!-- പ്രധാന കണ്ടെയ്നർ -->
     <div class="page-container">
-        <h2> 7 - Check Exam Result</h2>
-        
+        <h2><span class="eyebrow">LS Academy · Report Card</span>Class 7 — Check Exam Result</h2>
+
         <div class="form-group">
             <label for="rollNumber">Roll Number:</label>
             <input type="text" id="rollNumber" placeholder="Enter Roll Number (e.g., 101)">
@@ -28,30 +28,14 @@
         </div>
 
         <button onclick="checkStudentResult()" class="submit-btn">Check Result</button>
-        
-        <!-- റിസൾട്ട് കാണിക്കുന്ന ബോക്സ് -->
-        <div id="resultBox" style="display: none; margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <!-- ഡാറ്റ ഇവിടെ ലോഡ് ചെയ്യപ്പെടും -->
-        </div>
+
+        <div id="resultBox"></div>
     </div>
 
     <!-- ഫയർബേസ് v9 കോഡ് -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyC_hjdAHD11DPLXGC-wC1sltAAlunrG1XE",
-            authDomain: "ls-tuition.firebaseapp.com",
-            projectId: "ls-tuition",
-            storageBucket: "ls-tuition.firebasestorage.app",
-            messagingSenderId: "436382812973",
-            appId: "1:436382812973:web:1539769f23e03f22cca1a4",
-            measurementId: "G-NVXR2KJ5F8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { db } from "./firebase-config.mjs";
 
         window.checkStudentResult = async function() {
             const rollNo = document.getElementById('rollNumber').value.trim();
@@ -65,37 +49,38 @@
 
             try {
                 const q = query(
-                    collection(db, "class7_results"), 
+                    collection(db, "class7_results"),
                     where("rollNumber", "==", rollNo),
                     where("name", "==", sName)
                 );
-                
+
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
                     resultBox.style.display = "block";
-                    resultBox.innerHTML = "<p style='color: red;'>ഇത്തരം വിവരങ്ങൾ ഒന്നും കണ്ടെത്താനായില്ല. റോൾ നമ്പറും പേരും കൃത്യമാണെന്ന് ഉറപ്പുവരുത്തുക.</p>";
-                } else {
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        resultBox.style.display = "block";
-                        resultBox.innerHTML = `
-                            <h4 style="color: #1a73e8; margin-bottom: 10px;">റിസൾട്ട് വിവരങ്ങൾ:</h4>
-                          <p><strong>പേര്:</strong> ${data.name}</p>
-                            <p><strong>റോൾ നമ്പർ:</strong> ${data.rollNumber}</p>
-                            <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
-                                                   <p><strong>മലയാളം പാർട്ട് 1:</strong> ${data.malayalam1 || 'N/A'}</p>
-    <p><strong>മലയാളം പാർട്ട് 2:</strong> ${data.malayalam2 || 'N/A'}</p>
-    <p><strong>ഇംഗ്ലീഷ്:</strong> ${data.english || 'N/A'}</p>
-    <p><strong>ഹിന്ദി:</strong> ${data.hindi || 'N/A'}</p>
-    <p><strong>ഗണിതം (Maths):</strong> ${data.maths || 'N/A'}</p>
-    <p><strong>ഫിസിക്സ്:</strong> ${data.physics || 'N/A'}</p>
-    <p><strong>കെമിസ്ട്രി:</strong> ${data.chemistry || 'N/A'}</p>
-    <p><strong>സോഷ്യൽ സയൻസ്:</strong> ${data.socialScience || 'N/A'}</p>
-    <p><strong>ബയോളജി:</strong> ${data.biology || 'N/A'}</p>
-                        `;
-                    });
+                    resultBox.innerHTML = "<p class='error-text'>ഇത്തരം വിവരങ്ങൾ ഒന്നും കണ്ടെത്താനായില്ല. റോൾ നമ്പറും പേരും കൃത്യമാണെന്ന് ഉറപ്പുവരുത്തുക.</p>";
+                    return;
                 }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    resultBox.style.display = "block";
+                    resultBox.innerHTML = `
+                        <h4>${data.name}</h4>
+                        <p class="result-roll">റോൾ നമ്പർ: ${data.rollNumber}</p>
+                        <div class="marks-grid">
+                            <div class="marks-item"><span class="subject">മലയാളം പാർട്ട് 1</span><span class="score">${data.malayalam1 ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">മലയാളം പാർട്ട് 2</span><span class="score">${data.malayalam2 ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">ഇംഗ്ലീഷ്</span><span class="score">${data.english ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">ഹിന്ദി</span><span class="score">${data.hindi ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">ഗണിതം</span><span class="score">${data.maths ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">ഫിസിക്സ്</span><span class="score">${data.physics ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">കെമിസ്ട്രി</span><span class="score">${data.chemistry ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">സോഷ്യൽ സയൻസ്</span><span class="score">${data.socialScience ?? 'N/A'}</span></div>
+                            <div class="marks-item"><span class="subject">ബയോളജി</span><span class="score">${data.biology ?? 'N/A'}</span></div>
+                        </div>
+                    `;
+                });
             } catch (error) {
                 console.error("Error getting document: ", error);
                 alert("എന്തെങ്കിലും പ്രശ്നം സംഭവിച്ചു. വീണ്ടും ശ്രമിക്കുക.");
